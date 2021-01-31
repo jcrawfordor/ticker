@@ -13,7 +13,7 @@ def get_printer():
 
 
 def build_index(flash=None):
-    lists = Lists.select()
+    lists = List.select()
     return render_template('index.html', lists=lists, flash=flash)
 
 
@@ -28,7 +28,7 @@ def mod_item():
     item_name = request.form['item']
     action = request.form['action']
     if action == "add":
-        list = List.select().where(List.name == list)
+        list = List.select().where(List.name == list_name)
 
         item_check = Item.select().where(Item.name == item_name, Item.list == list)
         if item_check.exists():
