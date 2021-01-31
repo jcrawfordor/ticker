@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body>
+    {% if flash %}
+    <div class="row">
+      <div class="col-xs-12 flash">
+        <p>{{ flash }}</p>
+      </div>
+    </div>
+    {% endif %}
     <div class="row">
       {% block body %}
       {% endblock %}

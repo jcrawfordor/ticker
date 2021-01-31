@@ -37,20 +37,12 @@ def mod_item():
     item_name = request.form['item']
     action = request.form['action']
     if action == "add":
-        list = List.select().where(List.name == list_name)
-
-        item_check = Item.select().where(Item.name == item_name, Item.list == list)
-        if item_check.exists():
-            flash = "Item already exists."
-            return build_index(flash)
-
-        item = Item()
-        item.name = item_name
-        item.list = list
-        item.save()
+        list = List.get(List.name == list_name)
+        item = Item.get_or_create(name=item_name, list=list)
         flash = "Added item"
     if action == "del":
-        item = Item.select().where(Item.name == item_name)
+        list = List.get(List.name == list_name)
+        item = Item.get(Item.name == item_name, Item.list == list)
         item.delete()
         flash = "Deleted item"
     return build_index(flash)
@@ -61,15 +53,13 @@ def mod_list():
     list_name = request.form['list']
     action = request.form['action']
     if action == "add":
-        list = List()
-        list.name = list_name
-        list.save()
+        list = List.get_or_create(name=list_name)
         flash = "List added"
     if action == "del":
-        list = List.select().where(List.name == list_name)
+        list = List.get(List.name == list_name)
         list.delete()
         flash = "List deleted"
     if action == "print":
-        list = List.select().where(List.name == list_name)
+        list = List.get(List.name == list_name)
         print_list(list)
     return build_index(flash)
