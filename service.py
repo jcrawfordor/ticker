@@ -15,14 +15,14 @@ def build_index(flash=None):
 
 def print_list(list):
     p = Serial(devfile="/dev/ttyUSB0", baudrate=38400, bytesize=8, parity='N', stopbits=1, timeout=1.00, dsrdtr=True)
-    p.set(align='center', bold=True, double_height=True)
-    p.textln(list.name)
-    p.set(align='left', bold=False, double_height=False)
+    p.set('center', 'B', 'B', 2, 2)
+    p.text(f"{list.name}\n")
+    p.set('left', 'A', 'normal', 1, 1)
     for item in list.items:
-        p.textln(item.name)
+        p.text(f"[  ] {item.name}\n")
     p.textln()
     date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    p.textln(f"as of {date}")
+    p.text(f"as of {date}\n")
     p.cut()
 
 
@@ -70,5 +70,6 @@ def mod_list():
         list.delete()
         flash = "List deleted"
     if action == "print":
+        list = List.select().where(List.name == list_name)
         print_list(list)
     return build_index(flash)
