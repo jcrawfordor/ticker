@@ -6,7 +6,6 @@
   <table>
     {% for item in list.items %}
     <tr>
-	    <td>{{ item.name }}</td>
 	    <td>
 	      <form action="/moditem" method="POST">
           <input type="hidden" name="list" value="{{ list.name }}">
@@ -14,6 +13,7 @@
           <input type="submit" name="action" value="del">
 	      </form>
 	    </td>
+      <td>{{ item.name }}</td>
     </tr>
     {% endfor %}
   </table>

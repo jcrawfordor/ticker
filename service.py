@@ -1,21 +1,29 @@
 from flask import Flask, render_template, request
 from escpos.printer import Serial
 from data import List, Item, db
-import configparser
+import datetime
 
 app = Flask(__name__)
 db.connect()
 db.create_tables([List, Item])
 
 
-def get_printer():
-    return Serial(devfile="/dev/ttyUSB0", baudrate=38400, bytesize=8, parity='N', stopbits=1, timeout=1.00, dsrdtr=True)
-
-
 def build_index(flash=None):
     lists = List.select()
     return render_template('index.html', lists=lists, flash=flash)
 
+
+def print_list(list):
+    p = Serial(devfile="/dev/ttyUSB0", baudrate=38400, bytesize=8, parity='N', stopbits=1, timeout=1.00, dsrdtr=True)
+    p.set(align='center', bold=True, double_height=True)
+    p.textln(list.name)
+    p.set(align='left', bold=False, double_height=False)
+    for item in list.items:
+        p.textln(item.name)
+    p.textln()
+    date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    p.textln(f"as of {date}")
+    p.cut()
 
 @app.route('/')
 def default_ui():
@@ -60,4 +68,6 @@ def mod_list():
         list = List.select().where(List.name == list_name)
         list.delete()
         flash = "List deleted"
+    if action == "print":
+        print_list(list)
     return build_index(flash)
