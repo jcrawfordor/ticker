@@ -1,15 +1,19 @@
 body {
-    font-family: sans-serif;
+    font-family: Sans-Serif;
 }
 
 .listbox {
-	background-color: #ddd;
-	padding: 1em;
-	margin: 1em;
+    background-color: #ddd;
+    padding: 0.5em;
+    margin: 0.5em;
 }
 
 .flash {
     background-color: #bbf;
-	padding: 1em;
-	margin: 1em;
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+.addform {
+    margin-top: 1em;
 }

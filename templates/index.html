@@ -1,7 +1,7 @@
 {% extends "wrapper.html" %}
 {% block body %}
 {% for list in lists %}
-<div class="col-xs-12 col-md-2 listbox">
+<div class="col-xs-12 col-md-2"><div class="listbox">
   <h2>{{ list.name }}</h2>
   <table>
     {% for item in list.items %}
@@ -17,7 +17,7 @@
     </tr>
     {% endfor %}
   </table>
-  <form action="/moditem" method="POST">
+  <form action="/moditem" method="POST" class="addform">
     <input type="hidden" name="list" value="{{ list.name }}">
     <input type="text" name="item">
     <input type="submit" name="action" value="add">
@@ -29,13 +29,13 @@
     <input type="submit" name="action" value="clear">
     <input type="submit" name="action" value="delete">
   </form>
-</div>
+</div></div>
 {% endfor %}
-<div class="col-xs-12 col-md-2 listbox">
+<div class="col-xs-12 col-md-2"><div class="listbox">
   <p>new list...</p>
   <form action="/modlist" method="POST">
     <input type="text" name="list">
     <input type="submit" name="action" value="add">
   </form>
-</div>
+</div></div>
 {% endblock %}

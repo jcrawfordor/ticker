@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from escpos.printer import Serial
 from data import List, Item, db
-import datetime
+from datetime import datetime
 
 app = Flask(__name__)
 db.connect()
@@ -20,9 +20,9 @@ def print_list(list):
     p.set('left', 'A', 'normal', 1, 1)
     for item in list.items:
         p.text(f"[  ] {item.name}\n")
-    p.textln()
     date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    p.text(f"as of {date}\n")
+    p.set('right', 'B', 'normal', 1, 1)
+    p.text(f"\nas of {date}\n")
     p.cut()
 
 
@@ -62,4 +62,5 @@ def mod_list():
     if action == "print":
         list = List.get(List.name == list_name)
         print_list(list)
+        flash = "Printed list"
     return build_index(flash)
