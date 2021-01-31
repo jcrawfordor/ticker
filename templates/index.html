@@ -7,7 +7,8 @@
     {% for item in list.items %}
     <tr>
 	    <td>
-	      <form action="/moditem" method="POST">
+	      <form action="/" method="POST">
+          <input type="hidden" name="object" value="item">
           <input type="hidden" name="list" value="{{ list.name }}">
           <input type="hidden" name="item" value="{{item.name}}">
           <input type="submit" name="action" value="del">
@@ -17,13 +18,15 @@
     </tr>
     {% endfor %}
   </table>
-  <form action="/moditem" method="POST" class="addform">
+  <form action="/" method="POST" class="addform">
+    <input type="hidden" name="object" value="item">
     <input type="hidden" name="list" value="{{ list.name }}">
     <input type="text" name="item">
     <input type="submit" name="action" value="add">
   </form>
   <br>
-  <form action="/modlist" method="POST">
+  <form action="/" method="POST">
+    <input type="hidden" name="object" value="list">
     <input type="hidden" name="list" value="{{ list.name }}">
     <input type="submit" name="action" value="print">
     <input type="submit" name="action" value="clear">
@@ -33,7 +36,8 @@
 {% endfor %}
 <div class="col-xs-12 col-md-3"><div class="listbox">
   <p>new list...</p>
-  <form action="/modlist" method="POST">
+  <form action="/" method="POST">
+    <input type="hidden" name="object" value="list">
     <input type="text" name="list">
     <input type="submit" name="action" value="add">
   </form>

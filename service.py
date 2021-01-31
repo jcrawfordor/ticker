@@ -26,13 +26,18 @@ def print_list(list):
     p.cut()
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def default_ui():
-    return build_index()
+    if 'object' in request.form:
+        if request.form['object'] == "item":
+            return mod_item(request)
+        elif request.form['object'] == "list":
+            return mod_list(request)
+    else:
+        return build_index()
 
 
-@app.route('/moditem', methods=['POST'])
-def mod_item():
+def mod_item(request):
     list_name = request.form['list']
     item_name = request.form['item']
     action = request.form['action']
@@ -48,21 +53,26 @@ def mod_item():
     return build_index(flash)
 
 
-@app.route('/modlist', methods=['POST'])
-def mod_list():
+def mod_list(request):
     list_name = request.form['list']
     action = request.form['action']
     if action == "add":
         list = List.get_or_create(name=list_name)
         flash = "List added"
     if action == "delete":
-        list = List.get(List.name == list_name)
-        list.delete_instance()
-        flash = "List deleted"
+        if 'confirm' in request.form and request.form['confirm'] == 'true':
+            list = List.get(List.name == list_name)
+            list.delete_instance()
+            flash = "List deleted"
+        else:
+            return render_template('confirm.html', action=action, list=list)
     if action == "clear":
-        list = List.get(List.name == list_name)
-        query = Item.delete().where(Item.list == list).execute()
-        flash = "List cleared"
+        if 'confirm' in request.form and request.form['confirm'] == 'true':
+            list = List.get(List.name == list_name)
+            query = Item.delete().where(Item.list == list).execute()
+            flash = "List cleared"
+        else:
+            return render_template('confirm.html', action=action, list=list)
     if action == "print":
         list = List.get(List.name == list_name)
         print_list(list)
