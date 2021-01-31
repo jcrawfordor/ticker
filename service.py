@@ -65,14 +65,14 @@ def mod_list(request):
             list.delete_instance()
             flash = "List deleted"
         else:
-            return render_template('confirm.html', action=action, list=list)
+            return render_template('confirm.html', action=action, list=list_name)
     if action == "clear":
         if 'confirm' in request.form and request.form['confirm'] == 'true':
             list = List.get(List.name == list_name)
             query = Item.delete().where(Item.list == list).execute()
             flash = "List cleared"
         else:
-            return render_template('confirm.html', action=action, list=list)
+            return render_template('confirm.html', action=action, list=list_name)
     if action == "print":
         list = List.get(List.name == list_name)
         print_list(list)
