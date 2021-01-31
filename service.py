@@ -43,7 +43,7 @@ def mod_item():
     if action == "del":
         list = List.get(List.name == list_name)
         item = Item.get(Item.name == item_name, Item.list == list)
-        item.delete()
+        item.delete_instance()
         flash = "Deleted item"
     return build_index(flash)
 
@@ -57,8 +57,11 @@ def mod_list():
         flash = "List added"
     if action == "del":
         list = List.get(List.name == list_name)
-        list.delete()
+        list.delete_instance()
         flash = "List deleted"
+    if action == "clear":
+        list = List.get(List.name == list_name)
+        query = Item.delete().where(Item.list == list).execute()
     if action == "print":
         list = List.get(List.name == list_name)
         print_list(list)
