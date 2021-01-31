@@ -24,6 +24,7 @@
   </form>
   <br>
   <form action="/modlist" method="POST">
+    <input type="hidden" name="list" value="{{ list.name }}">
     <input type="submit" name="action" value="print">
     <input type="submit" name="action" value="clear">
     <input type="submit" name="action" value="delete">

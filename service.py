@@ -25,6 +25,7 @@ def print_list(list):
     p.textln(f"as of {date}")
     p.cut()
 
+
 @app.route('/')
 def default_ui():
     return build_index()
