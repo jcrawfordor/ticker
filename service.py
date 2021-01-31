@@ -55,13 +55,14 @@ def mod_list():
     if action == "add":
         list = List.get_or_create(name=list_name)
         flash = "List added"
-    if action == "del":
+    if action == "delete":
         list = List.get(List.name == list_name)
         list.delete_instance()
         flash = "List deleted"
     if action == "clear":
         list = List.get(List.name == list_name)
         query = Item.delete().where(Item.list == list).execute()
+        flash = "List cleared"
     if action == "print":
         list = List.get(List.name == list_name)
         print_list(list)

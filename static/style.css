@@ -5,13 +5,11 @@ body {
 .listbox {
     background-color: #ddd;
     padding: 0.5em;
-    margin: 0.5em;
 }
 
 .flash {
     background-color: #bbf;
     padding: 0.5em;
-    margin: 0.5em;
 }
 
 .addform {

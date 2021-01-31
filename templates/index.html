@@ -1,7 +1,7 @@
 {% extends "wrapper.html" %}
 {% block body %}
 {% for list in lists %}
-<div class="col-xs-12 col-md-2"><div class="listbox">
+<div class="col-xs-12 col-md-3"><div class="listbox">
   <h2>{{ list.name }}</h2>
   <table>
     {% for item in list.items %}
@@ -31,7 +31,7 @@
   </form>
 </div></div>
 {% endfor %}
-<div class="col-xs-12 col-md-2"><div class="listbox">
+<div class="col-xs-12 col-md-3"><div class="listbox">
   <p>new list...</p>
   <form action="/modlist" method="POST">
     <input type="text" name="list">
