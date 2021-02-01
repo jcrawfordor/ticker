@@ -77,4 +77,6 @@ def mod_list(request):
         list = List.get(List.name == list_name)
         print_list(list)
         flash = "Printed list"
+    if action == "cancel":
+        flash = "Cancelled"
     return build_index(flash)
